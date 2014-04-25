@@ -1,0 +1,20 @@
+{
+  "name": "ng-tinymce-typeahead",
+  "version": "0.0.1",
+  "description": ".",
+  "author": "https://github.com/darul75/ng-tinymce-typeahead/graphs/contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/darul75/ng-tinymce-typeahead",
+  "main": "src/tinymce.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-karma": "~0.4.4",
+    "grunt-contrib-jshint": "~0.2.0"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/darul75/ng-tinymce-typeahead.git"
+  }
+}
