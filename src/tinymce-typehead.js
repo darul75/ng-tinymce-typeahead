@@ -40,7 +40,7 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
           highlight: true
         };
 
-        var originalMenu = angular.copy(scope.menus);  
+        scope.originalMenu = angular.copy(scope.menus);  
         scope.ariane = [];      
 
         scope.clickMenu = function(menu) {          
@@ -127,7 +127,8 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
               
           scope.showMenu = false;   
           scope.ariane = [];   
-          scope.selectedLink = {result: ''};  
+          scope.selectedLink = {result: ''};
+          scope.menus = scope.originalMenu;  
 
         };
 
@@ -158,6 +159,7 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
           scope.showMenu = false;   
           scope.ariane = [];   
           scope.selectedLink = {result: ''};
+          scope.menus = scope.originalMenu;
 
         };
 
