@@ -17,6 +17,7 @@ Check service example to see current format of results.
 Then on your tinymce editor, just press Ctrl+Space or Cmd+Key (mac), and menu will be displayed.
 
 *TINY MCE version 4 only.*
+*BOOTSTRAP version 3 only.*
 
 Sceenshot
 -------------
