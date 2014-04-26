@@ -1,0 +1,24 @@
+{
+  "name": "ng-tinymce-typeahead",
+  "version": "0.0.2",
+  "homepage": "https://github.com/darul75/ng-tinymce-typeahead",
+  "authors": [
+    "darul <darul75@gmail.com>"
+  ],
+  "main": ".src/tinymce-typehead.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-typeahead": "~0.1.4",
+    "angular": "~1.2.16",
+    "bootstrap": "~3.1.1",
+    "tinymce": "~4.0.23",
+    "angular-ui-tinymce": "~0.0.5"
+  }
+}

@@ -20,6 +20,7 @@
   <script type="text/javascript" src="../bower_components/angular-typeahead/angular-typeahead.js"></script>
   <script type="text/javascript" src="../src/tinymce-typehead.js"></script>
   <script type="text/javascript" src="../src/tinymce-typehead-service.js"></script>
+  <script type="text/javascript" src="../src/tinymce-typehead-factory.js"></script>
 </head>
 <body ng-app="MyApp">
   <form method="post" ng-controller="MainCtrl">
@@ -28,18 +29,37 @@
       ng-model="tinymce" 
       hotkey="{esc: close, 'ctrl+left': mute}" 
       class="mousetrap"></textarea>
-    <div ui-tinymce-linker-menu></div>
-    <div>{{tinymce}}</div>    
+    <div ui-tinymce-linker-menu menus="menus2"></div>
+    <div class="well">
+      <p><b>PREVIEW HERE</b></p>
+      <div ng-bind-html='html'></div>
+    </div>  
   </form>
 
 
   <script>
     var myAppModule = angular.module('MyApp', ['ui.tinymce', 'ui.tinymce.typehead']);
 
-    myAppModule.controller('MainCtrl', function($scope) {
+    myAppModule.controller('MainCtrl', function($scope, $sce) {
         
-        $scope.tinymce = "This is not hello world";
+        $scope.tinymce = "<p>This is not hello world press CTRL+space keys first.</p><p>Then select a word and do it again.</p><p>Enjoy !</p>";
+        $scope.$watch('tinymce', function(old, newOne) {
+          $scope.html = $sce.trustAsHtml(newOne);  
+        })
 
+        $scope.menus2 = [
+          { id: '1', label:'Music', icon:'glyphicon-music', children: [
+              {id:'1-1', label:'Links', icon: 'glyphicon-link', children: [
+                { id: '1-1-1', label:'Rap', type: 'link' },
+                { id: '1-1-2', label:'Rock', type: 'link' }
+              ]},
+              {id:'1-2', label:'Images', icon: 'glyphicon-picture', children: [
+                { id: '1-2-1', label:'Rap', type: 'image' },
+                { id: '1-2-2', label:'Rock', type: 'image' }
+              ]}
+            ]}          
+        ];
+        
     });
 
   </script>  
