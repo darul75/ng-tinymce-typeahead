@@ -1,4 +1,4 @@
-ng-tinymce-typeahead [![NPM version](https://badge.fury.io/js/ng-tinymce-typeahead.png)](http://badge.fury.io/js/ng-tinymce-typeahead) [![Build Status](https://travis-ci.org/darul75/ng-tinymce-typeahead.png?branch=master)](https://travis-ci.org/darul75/ng-tinymce-typeahead) [![Total views](https://sourcegraph.com/api/repos/github.com/darul75/ng-tinymce-typeahead/counters/views.png)](https://sourcegraph.com/github.com/darul75/ng-tinymce-typeahead) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/darul75/ng-tinymce-typeahead/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+ng-tinymce-typeahead [![NPM version](https://badge.fury.io/js/ng-tinymce-typeahead.png)](http://badge.fury.io/js/ng-tinymce-typeahead) [![Build Status](https://travis-ci.org/darul75/ng-tinymce-typeahead.png?branch=master)](https://travis-ci.org/darul75/ng-tinymce-typeahead) [![Total views](https://sourcegraph.com/api/repos/github.com/darul75/ng-tinymce-typeahead/counters/views.png)](https://sourcegraph.com/github.com/darul75/ng-tinymce-typeahead)
 =====================
 
 Angular directive tinymce autocomplete links ( or image ) control.
