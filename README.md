@@ -1,24 +1,128 @@
 ng-tinymce-typeahead [![NPM version](https://badge.fury.io/js/ng-tinymce-typeahead.png)](http://badge.fury.io/js/ng-tinymce-typeahead) [![Build Status](https://travis-ci.org/darul75/ng-tinymce-typeahead.png?branch=master)](https://travis-ci.org/darul75/ng-tinymce-typeahead) [![Total views](https://sourcegraph.com/api/repos/github.com/darul75/ng-tinymce-typeahead/counters/views.png)](https://sourcegraph.com/github.com/darul75/ng-tinymce-typeahead)
 =====================
 
-Angular directive tinymce autocomplete links ( or image ) control.
-
+Angular directive tinymce autocomplete menu for links or image quick insertion control.
 
 Why
 -------------
 
-TODO
+Insert a link or an image is not user very friendly with tinymce.
+
+Idea is to provide a faster way for inserting images and links in editor.
+
+All you need to do is create your own REST service and consume it with $http or $resource by instance. 
+
+Check service example to see current format of results.
+
+Then on your tinymce editor, just press Ctrl+Space or Cmd+Key (mac), and menu will be displayed.
+
+*TINY MCE version 4 only.*
 
 Sceenshot
 -------------
 
-TODO
+![ng-tinymce-typeahead demo](http://darul75.github.io/ng-slider/images/tinymce1.png "ng-tinymce-typeahead screenshot")
+![ng-tinymce-typeahead demo](http://darul75.github.io/ng-slider/images/tinymce2.png "ng-tinymce-typeahead screenshot")
+![ng-tinymce-typeahead demo](http://darul75.github.io/ng-slider/images/tinymce3.png "ng-tinymce-typeahead screenshot")
+![ng-tinymce-typeahead demo](http://darul75.github.io/ng-slider/images/tinymce4.png "ng-tinymce-typeahead screenshot")
+![ng-tinymce-typeahead demo](http://darul75.github.io/ng-slider/images/tinymce5.png "ng-tinymce-typeahead screenshot")
+![ng-tinymce-typeahead demo](http://darul75.github.io/ng-slider/images/tinymce-end.png "ng-tinymce-typeahead screenshot")
 
 Demo
 -------------
 
 TODO
 
+How to use it
+-------------
+
+You should already have script required for Angular, note sanitize module use.
+
+```html
+<-- COMMON LIBS -->
+<script type="text/javascript" src="angular.min.js"></script>
+<script type="text/javascript" src="bootstrap.js"></script>
+<script type="text/javascript" src="tinymce.min.js"></script>
+<script type="text/javascript" src="typeahead.js/dist/bloodhound.min.js"></script>
+<script type="text/javascript" src="typeahead.js/dist/typeahead.bundle.js"></script>
+
+<-- ANGULAR LIBS -->
+<script type="text/javascript" src="angular-ui-tinymce/src/tinymce.js"></script>
+<script type="text/javascript" src="angular-typeahead/angular-typeahead.js"></script>
+<script type="text/javascript" src="angular-ui-tinymce/src/tinymce.js"></script>
+```
+
+to the list above, you should add:
+
+```html
+<link rel="stylesheet" type="text/css" href="../src/tinymce-typeahead-style.css">
+
+<script type="text/javascript" src="tinymce-typeahead.js"></script>
+<script type="text/javascript" src="src/tinymce-typeahead-service.js"></script>
+<script type="text/javascript" src="src/tinymce-typeahead-factory.js"></script>
+```
+
+Then, inject `ui.tinymce` and `ui.tinymce.typehead` in your application module:
+
+```javascript
+angular.module('myApp', ['ui.tinymce', 'ui.tinymce.typehead']);
+```
+
+and then under your tinymce directive add an `div` with `ui-tinymce-linker-menu` directive name attribute, `menu` scope variable attribute.
+Note: link or image plugin have to be loaded, if not no issue, menu will just be hidden.
+
+```html
+<textarea id="tinymce"  
+      ui-tinymce='{body_class: "mousetrap", plugins: ["link image"]}' 
+      ng-model="tinymce" 
+      hotkey="{esc: close, 'ctrl+left': mute}" 
+      class="mousetrap"></textarea>
+<div ui-tinymce-linker-menu menu="menu"></div>
+```
+
+```javascript
+myAppModule.controller('MainCtrl', function($scope) {
+        
+    $scope.menu = [
+      { id: '1', label:'Music', icon:'glyphicon-music', children: [
+          {id:'1-1', label:'Links', icon: 'glyphicon-link', children: [
+            { id: '1-1-1', label:'Rap', type: 'link' },
+            { id: '1-1-2', label:'Rock', type: 'link' }
+          ]},
+          {id:'1-2', label:'Images', icon: 'glyphicon-picture', children: [
+            { id: '1-2-1', label:'Rap', type: 'image' },
+            { id: '1-2-2', label:'Rock', type: 'image' }
+          ]}
+      ]},
+      { id: '2', label:'Sport', icon:'glyphicon-tower', children: [
+         .......
+         ....
+         ....
+      ]}          
+    ];
+    
+});
+```
+
+### Options
+
+Options for your slider in json format {from:.....}
+
+* `menu`: json menu
+
+Todo
+-------------
+
+- Improve key detection.
+- Choose better menu model
+- ...many things 
+
+Inspiration
+-------------
+
+https://github.com/Siyfion/angular-typeahead
+http://twitter.github.io/typeahead.js/
+...
 
 Installation
 ------------
