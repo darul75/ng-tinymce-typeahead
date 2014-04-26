@@ -30,8 +30,9 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
 
         var isDefined = angular.isDefined;     
 
-        if (!isDefined(attrs.menus))
+        if (!isDefined(attrs.menus)) {
           return;        
+        }
 
         scope.selectedLink = {result: ''};
 
@@ -45,8 +46,9 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
 
         scope.clickMenu = function(menu) {          
 
-          if (scope.ariane.indexOf(menu) < 0)
+          if (scope.ariane.indexOf(menu) < 0) {
             scope.ariane.push(menu);
+          }  
           
           if (menu.children) {
               scope.showOptions = false;
@@ -93,21 +95,22 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
 
           var url = scope.selectedLink.result.url;
           var label = scope.selectedLink.result.label;          
+          var noSelectionLinkAttrs = { target: '_blank', title: label, href: url };
            
           switch(scope.selectedLink.result.type) {
             // LINKS 
             case 'link':
-              var noSelectionLinkAttrs = { target: '_blank', title: label, href: url };
-
-              if (html)
+              
+              if (html) {
                 tinymce.execCommand('mceInsertLink', false, url);
-              else 
+              }  
+              else { 
                 ed.insertContent(dom.createHTML('a', noSelectionLinkAttrs, dom.encode(noSelectionLinkAttrs.title)));
+              }  
 
             break;
             // IMAGE 
-            case 'image':
-              var noSelectionLinkAttrs = { target: '_blank', title: label, href: url };
+            case 'image':              
               
               // http://stackoverflow.com/questions/5192134/how-to-insert-an-image-at-cursor-position-in-tinymce
               
@@ -187,8 +190,9 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
             e.editor.on('keydown', function(e) {                           
 
               // TODO: check wether still works on windows  
-              if (e.keyCode === ctrlKey || e.ctrlKey || e.metaKey) 
+              if (e.keyCode === ctrlKey || e.ctrlKey || e.metaKey) {
                 ctrlDown = true;
+              }  
 
               //   if (ctrlDown && e.keyCode === spaceKey)
               //     e.preventDefault();
@@ -197,7 +201,7 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
 
               // e.editor.on('keyup', function(e) {              
 
-              if (ctrlDown && e.keyCode == spaceKey) {
+              if (ctrlDown && e.keyCode === spaceKey) {
                 ctrlDown = false;                  
 
                 var ed = tinyMCE.activeEditor;
@@ -215,7 +219,7 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
                     textareaTop = selection.getRng().getClientRects()[0].top + selection.getRng().getClientRects()[0].height;
                     textareaLeft = selection.getRng().getClientRects()[0].left;
                 } else {
-                    textareaTop = parseInt($(this.selection.getNode()).css("font-size")) * 1.3 + nodePosition.top;
+                    textareaTop = parseInt($(this.selection.getNode()).css("font-size"), 10) * 1.3 + nodePosition.top;
                     textareaLeft = nodePosition.left;
                 }
 

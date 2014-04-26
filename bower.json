@@ -19,6 +19,7 @@
     "angular": "~1.2.16",
     "bootstrap": "~3.1.1",
     "tinymce": "~4.0.23",
-    "angular-ui-tinymce": "~0.0.5"
+    "angular-ui-tinymce": "~0.0.5",
+    "angular-mocks": "~1.2.16"
   }
 }
