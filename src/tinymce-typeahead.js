@@ -28,21 +28,23 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
       },
       link: function (scope, elm, attrs) {   
 
-        var isDefined = angular.isDefined;     
+        var isDefined = angular.isDefined;            
 
         if (!isDefined(attrs.menus)) {
           return;        
-        }
+        }        
 
-        scope.selectedLink = {result: ''};
+        scope.init = function() {
+          scope.selectedLink = {result: ''};
 
-        // Typeahead options object
-        scope.exampleOptions = {
-          highlight: true
-        };
+          // Typeahead options object
+          scope.exampleOptions = {
+            highlight: true
+          };
 
-        scope.originalMenu = angular.copy(scope.menus);  
-        scope.ariane = [];      
+          scope.originalMenu = angular.copy(scope.menus);  
+          scope.ariane = [];
+        };        
 
         scope.clickMenu = function(menu) {          
 
@@ -175,10 +177,17 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
           var ctrlDown = false;
           var ctrlKey = 17; // windows
           var cmdKey = 91; // mac
-          var spaceKey = 32; // space
-          // Select each item the user clicks on
+          var spaceKey = 32; // space          
 
           tinymce.on('AddEditor', function(e) {
+
+            scope.linkPlugin = !!tinymce.AddOnManager.PluginManager.get('link');
+            scope.pluginImage = !!tinymce.AddOnManager.PluginManager.get('image');
+
+            if (!scope.linkPlugin && !scope.pluginImage)
+              return;
+
+            scope.init();
 
             e.editor.on('click', function(e) {
               timeout(function() {
