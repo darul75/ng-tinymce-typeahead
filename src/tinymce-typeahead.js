@@ -184,8 +184,9 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
             scope.pluginLink = !!tinymce.AddOnManager.PluginManager.get(constants.type.link);
             scope.pluginImage = !!tinymce.AddOnManager.PluginManager.get(constants.type.image);
 
-            if (!scope.linkPlugin && !scope.pluginImage)
+            if (!scope.linkPlugin && !scope.pluginImage) {
               return;
+            }  
 
             scope.init();
 

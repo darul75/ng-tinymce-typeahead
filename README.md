@@ -107,8 +107,6 @@ myAppModule.controller('MainCtrl', function($scope) {
 
 ### Options
 
-Options for your slider in json format {from:.....}
-
 * `menu`: json menu
 
 Todo
