@@ -1,7 +1,7 @@
 
 angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeahead.service', 'ui.tinymce.typehead.factory'])
   .value('uiTinymceTypeheadConfig', {})
-  .directive('uiTinymceLinkerMenu', ['$timeout', '$sce','typeaheadService', 'typeaheadFactory', function(timeout, sce, service, factory) {
+  .directive('uiTinymceLinkerMenu', ['$timeout', 'typeaheadService', 'typeaheadFactory', function(timeout, service, factory) {
 
     return {
       template: '<div ng-show="showMenu">' +                  
