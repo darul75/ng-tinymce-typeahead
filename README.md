@@ -133,18 +133,6 @@ Using npm:
 npm install ng-tinymce-typeahead
 ```
 
-How to use it
--------------
-
-You should already have script required for Angular, note sanitize module use.
-
-```html
-<script type="text/javascript" src="angular.min.js"></script>
-<script type="text/javascript" src="angular-sanitize.min.js"></script>
-```
-
-TODO
-
 ### Build
 
 You can run the tests by running
