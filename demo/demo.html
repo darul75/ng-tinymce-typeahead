@@ -29,7 +29,7 @@
       ng-model="tinymce" 
       hotkey="{esc: close, 'ctrl+left': mute}" 
       class="mousetrap"></textarea>
-    <div ui-tinymce-linker-menu menus="menus2"></div>
+    <div ui-tinymce-linker-menu menu="menu"></div>
     <div class="well">
       <p><b>PREVIEW HERE</b></p>
       <div ng-bind-html='html'></div>
@@ -47,7 +47,7 @@
           $scope.html = $sce.trustAsHtml(newOne);  
         })
 
-        $scope.menus2 = [
+        $scope.menu = [
           { id: '1', label:'Music', icon:'glyphicon-music', children: [
               {id:'1-1', label:'Links', icon: 'glyphicon-link', children: [
                 { id: '1-1-1', label:'Rap', type: 'link' },
@@ -57,7 +57,17 @@
                 { id: '1-2-1', label:'Rap', type: 'image' },
                 { id: '1-2-2', label:'Rock', type: 'image' }
               ]}
-            ]}          
+          ]},
+          { id: '1', label:'Sport', icon:'glyphicon-tower', children: [
+              {id:'1-1', label:'Links', icon: 'glyphicon-link', children: [
+                { id: '1-1-1', label:'Rap', type: 'link' },
+                { id: '1-1-2', label:'Rock', type: 'link' }
+              ]},
+              {id:'1-2', label:'Images', icon: 'glyphicon-picture', children: [
+                { id: '1-2-1', label:'Rap', type: 'image' },
+                { id: '1-2-2', label:'Rock', type: 'image' }
+              ]}
+          ]}          
         ];
         
     });

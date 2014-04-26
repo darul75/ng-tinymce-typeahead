@@ -1,56 +1,63 @@
 
 angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeahead.service', 'ui.tinymce.typehead.factory'])
-  .value('uiTinymceTypeheadConfig', {})
-  .directive('uiTinymceLinkerMenu', ['$timeout', 'typeaheadService', 'typeaheadFactory', function(timeout, service, factory) {
+  .constant('constants', {
+    type: {
+      link: 'link',
+      image: 'image'
+    },    
+    completeOptions: {
+      highlight: true
+    }
+  })
+  .directive('uiTinymceLinkerMenu', ['$timeout', 'typeaheadService', 'typeaheadFactory', 'constants', function(timeout, service, factory, constants) {
 
     return {
       template: '<div ng-show="showMenu">' +                  
                   '<ul class="dropdown-menu" style="display:block;position:absolute;z-index: 1070;top:{{top}}px;left:{{left}}px;width:300px">' +
                     '<li class="dropdown-header" ng-if="ariane && ariane.length > 0"><button class="btn btn-default btn-xs" ng-repeat="menu in ariane" href="#" ng-click="clickMenu(menu)">{{menu.label}}</button></li>' +
-                    '<li ng-repeat="menu in menus"><a href="#" ng-click="clickMenu(menu)">' +
+                    '<li ng-repeat="menu in menus" ng-show="!menu.inactive"><a href="#" ng-click="clickMenu(menu)">' +
                       '<span ng-if="menu.icon" class="glyphicon {{menu.icon}}"></span> {{menu.label}}</a>' +                      
                     '</li>' +                  
                   '</ul>' +                                  
                   '<div ng-if="resultsDataset" style="display:block;position:absolute;z-index: 1070;top:{{top}}px;left:{{left}}px;width:350px" class="well btn-group-vertical">' + 
                     '<div class="dropdown-header text-center"><span class="label label-primary" ng-repeat="menu in ariane">{{menu.label}}</span></div>' +
                     '<div class="input-group">' +
-                      '<input type="text" placeholder="Search..." class="form-control" sf-typeahead options="exampleOptions" datasets="resultsDataset" ng-model="selectedLink.result" style="width:270px">' +
+                      '<input type="text" placeholder="Search..." class="form-control" sf-typeahead options="constants.completeOptions" datasets="resultsDataset" ng-model="selectedLink.result" style="width:270px">' +
                       '<span class="input-group-btn">' +
                         '<button type="button" class="btn btn-success" ng-click="select()"><span class="glyphicon glyphicon-plus"></span></button>' +
                         // '<button type="button" class="btn btn-success" ng-click="selectAdvanced()"><span class="glyphicon glyphicon-plus"></span>(options)</button>' + TODO
-                      '</span>' +  
-                      
+                      '</span>' +                        
                     '</div>' +
                   '</div>'+
                 '<div>',  
       scope: {
-        menus: '='
+        menu: '='
       },
       link: function (scope, elm, attrs) {   
 
         var isDefined = angular.isDefined;            
 
-        if (!isDefined(attrs.menus)) {
+        if (!isDefined(attrs.menu)) {
           return;        
         }        
+
+        var LINK = constants.type.link;
+        var IMG = constants.type.image;
 
         scope.init = function() {
           scope.selectedLink = {result: ''};
 
-          // Typeahead options object
-          scope.exampleOptions = {
-            highlight: true
-          };
+          cleanMenu(scope.menu, null);
 
-          scope.originalMenu = angular.copy(scope.menus);  
+          scope.originalMenu = angular.copy(scope.menu);  
           scope.ariane = [];
-        };        
+        };
 
         scope.clickMenu = function(menu) {          
 
           if (scope.ariane.indexOf(menu) < 0) {
             scope.ariane.push(menu);
-          }  
+          }
           
           if (menu.children) {
               scope.showOptions = false;
@@ -72,14 +79,14 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
 
         scope.fetch = function() {
 
-          if (scope.activeMenuItem.type === 'link') { 
+          if (scope.activeMenuItem.type === LINK) { 
             service.FetchLinks(scope.activeMenuItem, 'test').then(function(data) {              
               scope.resultsDataset = factory.GetResultDatasets(data);              
               scope.showMenu = true;            
             });
 
           }
-          else if (scope.activeMenuItem.type === 'image') {
+          else if (scope.activeMenuItem.type === IMG) {
 
             service.FetchImageLinks(scope.activeMenuItem, 'test').then(function(data) {
               scope.resultsDataset = factory.GetResultDatasets(data);              
@@ -99,31 +106,25 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
           var label = scope.selectedLink.result.label;          
           var noSelectionLinkAttrs = { target: '_blank', title: label, href: url };
            
-          switch(scope.selectedLink.result.type) {
-            // LINKS 
-            case 'link':
-              
+          switch(scope.selectedLink.result.type) {            
+            case LINK:              
               if (html) {
                 tinymce.execCommand('mceInsertLink', false, url);
               }  
               else { 
                 ed.insertContent(dom.createHTML('a', noSelectionLinkAttrs, dom.encode(noSelectionLinkAttrs.title)));
               }  
-
-            break;
-            // IMAGE 
-            case 'image':              
-              
-              // http://stackoverflow.com/questions/5192134/how-to-insert-an-image-at-cursor-position-in-tinymce
-              
+            break;            
+            case IMG:
+              // http://stackoverflow.com/questions/5192134/how-to-insert-an-image-at-cursor-position-in-tinymce              
               var range = ed.selection.getRng();                  // get range
               var newNode = ed.getDoc().createElement ( "img" );  // create img node
               newNode.src=url;                                    // add src attribute
               range.insertNode(newNode);
 
             break;
-
-
+            default:
+            break;
           }
 
           timeout(function() {
@@ -141,15 +142,14 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
           var url = scope.selectedLink.result.url;
           var label = scope.selectedLink.result.label;
 
-          switch(scope.selectedLink.result.type) {
-            // LINKS 
-            case 'link':         
+          switch(scope.selectedLink.result.type) {            
+            case LINK:         
               var links = [{value:'_blank', link: url, title: label}];
                 scope.showMenu = false;
                 var tutu = tinymce.activeEditor.plugins.link.showDialog(links);                
             break;
             // IMAGE : TODO
-            case 'image':         
+            case IMG:         
               var noSelectionLinkAttrs = { target: '_blank', title: label, href: url };
               
               // http://stackoverflow.com/questions/5192134/how-to-insert-an-image-at-cursor-position-in-tinymce
@@ -181,8 +181,8 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
 
           tinymce.on('AddEditor', function(e) {
 
-            scope.linkPlugin = !!tinymce.AddOnManager.PluginManager.get('link');
-            scope.pluginImage = !!tinymce.AddOnManager.PluginManager.get('image');
+            scope.pluginLink = !!tinymce.AddOnManager.PluginManager.get(constants.type.link);
+            scope.pluginImage = !!tinymce.AddOnManager.PluginManager.get(constants.type.image);
 
             if (!scope.linkPlugin && !scope.pluginImage)
               return;
@@ -218,7 +218,7 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
                 var selection = ed.selection;
 
                 var tinymcePosition = container.position();
-                var toolbarPosition = container.find(".mce-toolbar").first();
+                var toolbarPosition = container.find('.mce-toolbar').first();
 
                 var nodePosition = $(selection.getNode()).position();
                 var textareaTop = 0;
@@ -228,7 +228,7 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
                     textareaTop = selection.getRng().getClientRects()[0].top + selection.getRng().getClientRects()[0].height;
                     textareaLeft = selection.getRng().getClientRects()[0].left;
                 } else {
-                    textareaTop = parseInt($(this.selection.getNode()).css("font-size"), 10) * 1.3 + nodePosition.top;
+                    textareaTop = parseInt($(this.selection.getNode()).css('font-size'), 10) * 1.3 + nodePosition.top;
                     textareaLeft = nodePosition.left;
                 }
 
@@ -251,11 +251,33 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
             e.editor.on('mousedown', function(e) {              
 
                 scope.showMenu = false;
-                scope.menus = originalMenu;              
+                scope.menus = scope.originalMenu;              
 
             });
 
           });       
+
+        };        
+
+        // depend of active tinymce plugins
+        var cleanMenu = function(menus, parent) {          
+          for (var i=0;i<menus.length;i++) {
+            var menu = menus[i];
+
+            if (menu.children) {
+              cleanMenu(menu.children, menu);
+            }
+
+            if (menu.type && !scope.pluginLink && menu.type === LINK) {
+              parent.inactive = true;
+              break;
+            }
+            if (menu.type && !scope.pluginImage && menu.type === IMG) {
+              parent.inactive = true;
+              break;
+            }
+
+          }
 
         };
 

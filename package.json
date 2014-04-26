@@ -1,7 +1,7 @@
 {
   "name": "ng-tinymce-typeahead",
-  "version": "0.0.2",
-  "description": ".",
+  "version": "0.0.3",
+  "description": "Angular directive tinymce autocomplete menu for links or image quick insertion control.",
   "author": "https://github.com/darul75/ng-tinymce-typeahead/graphs/contributors",
   "license": "MIT",
   "homepage": "https://github.com/darul75/ng-tinymce-typeahead",
