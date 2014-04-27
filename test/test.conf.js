@@ -16,7 +16,7 @@
         'test/*.spec.js'
       ],
       singleRun : true,
-      browsers = [ 'Chrome' ]
+      browsers : [ 'Chrome' ]
     });
 
   };

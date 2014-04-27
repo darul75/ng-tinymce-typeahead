@@ -14,6 +14,9 @@
     "karma": "~0.10",
     "grunt-bower-task": "~0.3.4"
   },
+  "scripts": {
+    "test": "./node_modules/.bin/karma start test/test.conf.js"
+  },
   "keywords": [
     "angular",
     "tinymce",
