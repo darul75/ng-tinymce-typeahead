@@ -17,19 +17,21 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
                     '<li class="dropdown-header" ng-if="ariane && ariane.length > 0"><button class="btn btn-default btn-xs" ng-repeat="menu in ariane" href="#" ng-click="clickMenu(menu)">{{menu.label}}</button></li>' +
                     '<li ng-repeat="menu in menus" ng-show="!menu.inactive"><a href="#" ng-click="clickMenu(menu)">' +
                       '<span ng-if="menu.icon" class="glyphicon {{menu.icon}}"></span> {{menu.label}}</a>' +                      
-                    '</li>' +                  
+                    '</li>' +
                   '</ul>' +                                  
-                  '<div ng-if="resultsDataset" style="display:block;position:absolute;z-index: 1070;top:{{top}}px;left:{{left}}px;width:350px" class="well btn-group-vertical">' + 
-                    '<div class="dropdown-header text-center"><span class="label label-primary" ng-repeat="menu in ariane">{{menu.label}}</span></div>' +
-                    '<div class="input-group">' +
-                      '<input type="text" placeholder="Search..." class="form-control" sf-typeahead options="constants.completeOptions" datasets="resultsDataset" ng-model="selectedLink.result" style="width:270px">' +
-                      '<span class="input-group-btn">' +
-                        '<button type="button" class="btn btn-success" ng-click="select()"><span class="glyphicon glyphicon-plus"></span></button>' +
-                        // '<button type="button" class="btn btn-success" ng-click="selectAdvanced()"><span class="glyphicon glyphicon-plus"></span>(options)</button>' + TODO
-                      '</span>' +                        
+                  '<div ng-if="resultsDataset" style="display:block;position:absolute;z-index: 1070;top:{{top}}px;left:{{left}}px;width:350px" class="panel panel-default">' + 
+                    '<div class="panel-heading text-center"><span class="label label-primary" ng-repeat="menu in ariane">{{menu.label}}</span></div>' +
+                    '<div class="panel-body">' +
+                      '<div class="input-group">' +
+                        '<input type="text" placeholder="Search..." class="form-control" sf-typeahead options="constants.completeOptions" datasets="resultsDataset" ng-model="selectedLink.result" style="width:270px">' +
+                        '<span class="input-group-btn">' +
+                          '<button type="button" class="btn btn-success" ng-click="select()"><span class="glyphicon glyphicon-plus"></span></button>' +
+                          // '<button type="button" class="btn btn-success" ng-click="selectAdvanced()"><span class="glyphicon glyphicon-plus"></span>(options)</button>' + TODO
+                        '</span>' +  
+                      '</div>' +                        
                     '</div>' +
                   '</div>'+
-                '<div>',  
+                '<div>', 
       scope: {
         menu: '='
       },
