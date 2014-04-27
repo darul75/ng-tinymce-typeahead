@@ -32,7 +32,7 @@ Sceenshot
 Demo
 -------------
 
-TODO
+http://darul75.github.io/ng-tinymce-typeahead/
 
 How to use it
 -------------
