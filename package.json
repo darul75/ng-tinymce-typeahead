@@ -1,6 +1,6 @@
 {
   "name": "ng-tinymce-typeahead",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Angular directive tinymce autocomplete menu for links or image quick insertion control.",
   "author": "https://github.com/darul75/ng-tinymce-typeahead/graphs/contributors",
   "license": "MIT",
@@ -11,6 +11,8 @@
     "grunt": "latest",
     "grunt-karma": "0.7.1",
     "grunt-contrib-jshint": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-cssmin": "~0.6.0",
     "karma": "~0.10",
     "grunt-bower-task": "~0.3.4"
   },
