@@ -10,7 +10,9 @@
   "devDependencies": {
     "grunt": "latest",
     "grunt-karma": "0.7.1",
-    "grunt-contrib-jshint": "latest"
+    "grunt-contrib-jshint": "latest",
+    "karma": "~0.10",
+    "grunt-bower-task": "~0.3.4"
   },
   "keywords": [
     "angular",
