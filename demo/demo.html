@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>AngularUI - TinyMCE Demo</title>  
+  <link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.css">  
+  <link rel="stylesheet" type="text/css" href="../src/tinymce-typeahead-style.css">
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+  <script type="text/javascript" src="../bower_components/tinymce/tinymce.min.js"></script>
+  <script type="text/javascript" src="../bower_components/typeahead.js/dist/bloodhound.min.js"></script>
+  <script type="text/javascript" src="../bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
+  <script type="text/javascript" src="../bower_components/tinymce/tinymce.min.js"></script>
+  <script type="text/javascript" src="../bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="../bower_components/angular-ui-tinymce/src/tinymce.js"></script>  
+  <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script type="text/javascript" src="../bower_components/angular-typeahead/angular-typeahead.js"></script>
+  <script type="text/javascript" src="../src/tinymce-typeahead.js"></script>
+  <script type="text/javascript" src="../src/tinymce-typeahead-service.js"></script>
+  <script type="text/javascript" src="../src/tinymce-typeahead-factory.js"></script>
+</head>
+<body ng-app="MyApp">
+  <form method="post" ng-controller="MainCtrl">
+    <textarea id="tinymce"  
+      ui-tinymce='{body_class: "mousetrap", plugins: ["link image"]}' 
+      ng-model="tinymce" 
+      hotkey="{esc: close, 'ctrl+left': mute}" 
+      class="mousetrap"></textarea>
+    <div ui-tinymce-linker-menu menu="menu"></div>
+    <div class="well">
+      <p><b>PREVIEW HERE</b></p>
+      <div ng-bind-html='html'></div>
+    </div>  
+  </form>
+
+
+  <script>
+    var myAppModule = angular.module('MyApp', ['ui.tinymce', 'ui.tinymce.typehead']);
+
+    myAppModule.controller('MainCtrl', function($scope, $sce) {
+        
+        $scope.tinymce = "<p>This is not hello world press CTRL+space keys first.</p><p>Then select a word and do it again.</p><p>Enjoy !</p>";
+        $scope.$watch('tinymce', function(old, newOne) {
+          $scope.html = $sce.trustAsHtml(newOne);  
+        })
+
+        $scope.menu = [
+          { id: '1', label:'Music', icon:'glyphicon-music', children: [
+              {id:'1-1', label:'Links', icon: 'glyphicon-link', children: [
+                { id: '1-1-1', label:'Rap', type: 'link' },
+                { id: '1-1-2', label:'Rock', type: 'link' }
+              ]},
+              {id:'1-2', label:'Images', icon: 'glyphicon-picture', children: [
+                { id: '1-2-1', label:'Rap', type: 'image' },
+                { id: '1-2-2', label:'Rock', type: 'image' }
+              ]}
+          ]},
+          { id: '1', label:'Sport', icon:'glyphicon-tower', children: [
+              {id:'1-1', label:'Links', icon: 'glyphicon-link', children: [
+                { id: '1-1-1', label:'Rap', type: 'link' },
+                { id: '1-1-2', label:'Rock', type: 'link' }
+              ]},
+              {id:'1-2', label:'Images', icon: 'glyphicon-picture', children: [
+                { id: '1-2-1', label:'Rap', type: 'image' },
+                { id: '1-2-2', label:'Rock', type: 'image' }
+              ]}
+          ]}          
+        ];
+        
+    });
+
+  </script>  
+</body>
+</html>
