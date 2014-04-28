@@ -64,7 +64,7 @@ module.exports = function (grunt) {
       },
       compress: {
         files: {          
-          'dist/ng-tinymce-typeahead.css': ['src/tinymce-typeahead-style.css']
+          'dist/ng-tinymce-typeahead.min.css': ['src/tinymce-typeahead-style.css']
         }
       }
     },
