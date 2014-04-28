@@ -1,4 +1,4 @@
-angular.module('ui.tinymce.typehead.factory', []).factory('typeaheadFactory', [function() {
+angular.module('ui.tinymce.typeahead.factory', []).factory('typeaheadFactory', [function() {
 
   var factory = {};
 

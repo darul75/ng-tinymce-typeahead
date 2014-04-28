@@ -1,5 +1,4 @@
-
-angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeahead.service', 'ui.tinymce.typehead.factory'])
+angular.module('ui.tinymce.typeahead', ['siyfion.sfTypeahead', 'ui.tinymce.typeahead.factory'])
   .constant('constants', {
     type: {
       link: 'link',
@@ -9,7 +8,7 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
       highlight: true
     }
   })
-  .directive('uiTinymceLinkerMenu', ['$timeout', 'typeaheadService', 'typeaheadFactory', 'constants', function(timeout, service, factory, constants) {
+  .directive('uiTinymceLinkerMenu', ['$timeout', 'typeaheadFactory', 'constants', function(timeout, factory, constants) {
 
     return {
       template: '<div ng-show="showMenu">' +                  
@@ -33,15 +32,24 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
                   '</div>'+
                 '<div>', 
       scope: {
-        menu: '='
+        menu: '=',
+        service: '='
       },
-      link: function (scope, elm, attrs) {   
+      link: function (scope, elm, attrs) {        
 
         var isDefined = angular.isDefined;            
 
         if (!isDefined(attrs.menu)) {
           return;        
-        }        
+        }
+
+        if (!isDefined(attrs.service)) {
+          return;        
+        }
+
+        var $injector = angular.injector([scope.service.module, 'ng']);
+
+        scope.serviceDelegator = $injector.get(scope.service.name);
 
         var LINK = constants.type.link;
         var IMG = constants.type.image;
@@ -81,21 +89,27 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
 
         scope.fetch = function() {
 
-          if (scope.activeMenuItem.type === LINK) { 
-            service.FetchLinks(scope.activeMenuItem, 'test').then(function(data) {              
+          var showResults = function(data) {
+            timeout(function() {
               scope.resultsDataset = factory.GetResultDatasets(data);              
-              scope.showMenu = true;            
+              scope.showMenu = true;
+            });
+          };
+
+          if (scope.activeMenuItem.type === LINK) { 
+            scope.serviceDelegator[scope.service.methodLinks](scope.activeMenuItem, 'test').then(function(data) {              
+               showResults(data);             
             });
 
           }
           else if (scope.activeMenuItem.type === IMG) {
 
-            service.FetchImageLinks(scope.activeMenuItem, 'test').then(function(data) {
-              scope.resultsDataset = factory.GetResultDatasets(data);              
-              scope.showMenu = true;              
+            scope.serviceDelegator[scope.service.methodImage](scope.activeMenuItem, 'test').then(function(data) {
+              showResults(data);
             });
 
           }
+
 
         };
 
@@ -201,15 +215,16 @@ angular.module('ui.tinymce.typehead', ['siyfion.sfTypeahead', 'ui.tinymce.typeah
 
             e.editor.on('keydown', function(e) {                           
 
-              // TODO: check wether still works on windows  
+              // TODO: check wether still works on mac
               if (e.keyCode === ctrlKey || e.ctrlKey || e.metaKey) {
                 ctrlDown = true;
               }  
 
-              //   if (ctrlDown && e.keyCode === spaceKey)
-              //     e.preventDefault();
+              if (ctrlDown && e.keyCode === spaceKey) {
+                  e.preventDefault();
+              }    
 
-              // });
+              /*});*/
 
               // e.editor.on('keyup', function(e) {              
 
