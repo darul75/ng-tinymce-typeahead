@@ -16,8 +16,9 @@ Check service example to see current format of results.
 
 Then on your tinymce editor, just press Ctrl+Space or Cmd+Key (mac), and menu will be displayed.
 
-*TINY MCE version 4 only.*
-*BOOTSTRAP version 3 only.*
+**TINY MCE version 4 only.**
+
+**BOOTSTRAP version 3 only.**
 
 Sceenshot
 -------------
@@ -66,8 +67,9 @@ Then, inject `ui.tinymce` and `ui.tinymce.typehead` in your application module:
 angular.module('myApp', ['ui.tinymce', 'ui.tinymce.typehead']);
 ```
 
-and then under your tinymce directive add an `div` with `ui-tinymce-linker-menu` directive name attribute, `menu` scope variable attribute.
-Note: link or image plugin have to be loaded, if not no issue, menu will just be hidden.
+and then under your tinymce directive add an `div` with `ui-tinymce-linker-menu` directive name attribute, `menu` and `menu` scope variable attribute (detail below).
+
+**Note** link or image plugin have to be loaded, if not no issue, menu will just be hidden.
 
 ```html
 <!-- COMMON usage for TINYMCE-->
@@ -104,10 +106,10 @@ myAppModule.controller('MainCtrl', function($scope) {
       // HERE MY PROPOSITION, YOUR SERVICE WILL BE INJECTED AUTOMATICALY
       // SEE MY EXAMPLE : src/tinymce-typeahead-service.js
       $scope.service = {
-          module:"ui.tinymce.typeahead.service", // your service module
-          name:"typeaheadService", // your serice name
-          methodLinks:"FetchLinks", // method name to fetch links
-          methodImage:"FetchImageLinks" // method name to fetch image src links
+          module:"ui.tinymce.typeahead.service",      // service module
+          name:"typeaheadService",                    // service name
+          methodLinks:"FetchLinks",                   // method name to fetch links
+          methodImage:"FetchImageLinks"               // method name to fetch image src links
       };
       
     ];
