@@ -37,7 +37,7 @@ http://darul75.github.io/ng-tinymce-typeahead/
 How to use it
 -------------
 
-You should already have script required for Angular, note sanitize module use.
+You should already have script required for Angular.
 
 ```html
 <-- COMMON LIBS -->
@@ -47,20 +47,17 @@ You should already have script required for Angular, note sanitize module use.
 <script type="text/javascript" src="typeahead.js/dist/bloodhound.min.js"></script>
 <script type="text/javascript" src="typeahead.js/dist/typeahead.bundle.js"></script>
 
-<-- ANGULAR LIBS -->
+<-- ANGULAR LIBS PLUGINS -->
 <script type="text/javascript" src="angular-ui-tinymce/src/tinymce.js"></script>
 <script type="text/javascript" src="angular-typeahead/angular-typeahead.js"></script>
-<script type="text/javascript" src="angular-ui-tinymce/src/tinymce.js"></script>
 ```
 
 to the list above, you should add:
 
 ```html
-<link rel="stylesheet" type="text/css" href="../src/tinymce-typeahead-style.css">
+<link rel="stylesheet" type="text/css" href="dist/ng-tinymce-typeahead.min.css">
 
-<script type="text/javascript" src="tinymce-typeahead.js"></script>
-<script type="text/javascript" src="src/tinymce-typeahead-service.js"></script>
-<script type="text/javascript" src="src/tinymce-typeahead-factory.js"></script>
+<script type="text/javascript" src="dist/ng-tinymce-typeahead.min.js"></script>
 ```
 
 Then, inject `ui.tinymce` and `ui.tinymce.typehead` in your application module:
@@ -73,12 +70,14 @@ and then under your tinymce directive add an `div` with `ui-tinymce-linker-menu`
 Note: link or image plugin have to be loaded, if not no issue, menu will just be hidden.
 
 ```html
+<!-- COMMON usage for TINYMCE-->
 <textarea id="tinymce"  
       ui-tinymce='{body_class: "mousetrap", plugins: ["link image"]}' 
       ng-model="tinymce" 
       hotkey="{esc: close, 'ctrl+left': mute}" 
       class="mousetrap"></textarea>
-<div ui-tinymce-linker-menu menu="menu"></div>
+<!-- DIRECTIVE usage for this directive -->
+<div ui-tinymce-linker-menu menu="menu" service="service"></div>
 ```
 
 ```javascript
@@ -99,15 +98,27 @@ myAppModule.controller('MainCtrl', function($scope) {
          .......
          ....
          ....
-      ]}          
+      ]}
+      
+      // THEN YOU NEED TO DEFINE OR USE YOUR OWN SERVICE FOR LINKS RESULT
+      // HERE MY PROPOSITION, YOUR SERVICE WILL BE INJECTED AUTOMATICALY
+      // SEE MY EXAMPLE : src/tinymce-typeahead-service.js
+      $scope.service = {
+          module:"ui.tinymce.typeahead.service", // your service module
+          name:"typeaheadService", // your serice name
+          methodLinks:"FetchLinks", // method name to fetch links
+          methodImage:"FetchImageLinks" // method name to fetch image src links
+      };
+      
     ];
     
 });
 ```
 
-### Options
+### Required options
 
 * `menu`: json menu
+* `service`: how to inject your service
 
 Todo
 -------------
