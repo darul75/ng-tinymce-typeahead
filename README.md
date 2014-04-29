@@ -127,7 +127,6 @@ Todo
 
 - If text selection not empty, pass it to service search providers
 - Improve key detection.
-- Choose better menu model
 - ...many things 
 
 Inspiration
