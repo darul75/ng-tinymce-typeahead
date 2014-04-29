@@ -67,7 +67,7 @@ Then, inject `ui.tinymce` and `ui.tinymce.typehead` in your application module:
 angular.module('myApp', ['ui.tinymce', 'ui.tinymce.typehead']);
 ```
 
-and then under your tinymce directive add an `div` with `ui-tinymce-linker-menu` directive name attribute, `menu` and `menu` scope variable attribute (detail below).
+and then under your tinymce directive add an `div` with `ui-tinymce-linker-menu` directive name attribute, `menu` and `service` scope variable attribute (detail below).
 
 **Note** link or image plugin have to be loaded, if not no issue, menu will just be hidden.
 
