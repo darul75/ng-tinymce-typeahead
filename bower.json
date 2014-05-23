@@ -6,7 +6,7 @@
   "authors": [
     "darul <darul75@gmail.com>"
   ],
-  "main": ".src/tinymce-typehead.js",
+  "main": "src/tinymce-typehead.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -23,11 +23,13 @@
     "menu"
   ],
   "dependencies": {
-    "angular-typeahead": "~0.1.4",
+    "tinymce-dist": "~4.0.0",
     "angular": "~1.2.16",
     "bootstrap": "~3.1.1",
-    "tinymce": "~4.0.0",
-    "angular-ui-tinymce": "0.0.5",
+    "angular-typeahead": "~0.1.4",
+    "angular-ui-tinymce": "0.0.5"
+  },
+  "devDependencies":{
     "angular-mocks": "~1.2.16"
   }
 }
