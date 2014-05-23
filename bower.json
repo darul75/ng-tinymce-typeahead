@@ -6,7 +6,7 @@
   "authors": [
     "darul <darul75@gmail.com>"
   ],
-  "main": "src/tinymce-typehead.js",
+  "main": ["src/tinymce-typehead.js", "src/tinymce-typeahead-style.css"],
   "license": "MIT",
   "ignore": [
     "**/.*",
